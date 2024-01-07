@@ -10,12 +10,9 @@ set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 #--------------------------------------------------------------------------------------------------
 # C++ target and defines
-#include(${CMAKE_CURRENT_SOURCE_DIR}/nvpro_core/CMakeLists.txt)
-#include(${CMAKE_CURRENT_SOURCE_DIR}/nvpro_core/cmake/utilities.cmake)
-#include(${CMAKE_CURRENT_SOURCE_DIR}/nvpro_core/cmake/setup.cmake)
-#add_subdirectory(nvpro_core)
 set(CMAKE_CXX_STANDARD 23)
 add_executable(${PROJNAME})
+target_compile_definitions(${PROJNAME} PRIVATE -DNOMINMAX -DWIN32_LEAN_AND_MEAN) # MSVC specific
 
 #--------------------------------------------------------------------------------------------------
 # Source files for this project
