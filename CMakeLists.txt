@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.2 FATAL_ERROR)
 
 #--------------------------------------------------------------------------------------------------
 # Project setting
-set(PROJNAME sample_project)
+set(PROJNAME sampleproject)
 project(${PROJNAME} LANGUAGES CXX)
 message(STATUS "-------------------------------")
 message(STATUS "Processing Project ${PROJNAME}:")
