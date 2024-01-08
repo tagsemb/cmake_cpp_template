@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
 
 #--------------------------------------------------------------------------------------------------
 # Project setting
@@ -12,14 +12,18 @@ set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 # C++ target and defines
 set(CMAKE_CXX_STANDARD 23)
 add_executable(${PROJNAME})
-target_compile_definitions(${PROJNAME} PRIVATE -DNOMINMAX -DWIN32_LEAN_AND_MEAN) # MSVC specific
+if(MSVC)
+	message(STATUS "Adding MSVC-specific definitions")
+	target_compile_definitions(${PROJNAME} PRIVATE -DNOMINMAX -DWIN32_LEAN_AND_MEAN)
+endif(MSVC)
 
 #--------------------------------------------------------------------------------------------------
 # Source files for this project
 #
 file(GLOB SOURCE_FILES src/*.cpp src/*.hpp src/*.inl src/*.h src/*.c)
 set(BUILD_FILES CMakePresets.json vcpkg.json)
-set(ALL_FILES ${SOURCE_FILES} ${BUILD_FILES})
+set(MISC_FILES README.md)
+set(ALL_FILES ${SOURCE_FILES} ${BUILD_FILES} ${MISC_FILES})
 target_sources(${PROJNAME} PUBLIC ${ALL_FILES})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ALL_FILES})
 
