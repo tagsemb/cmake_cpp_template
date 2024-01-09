@@ -27,12 +27,18 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ALL_FILES})
 
 #--------------------------------------------------------------------------------------------------
 # Third-party libs
-function(link libname libtarget)
+function(link libname)
 	find_package(${libname} REQUIRED)
+	if(ARGC EQUAL 2)
+		set(libtarget ${ARGV1})
+	else()
+		set(libtarget ${libname}::${libname})
+	endif()
 	target_link_libraries(${PROJECT_NAME} PRIVATE ${libtarget})
+	install(FILES $<TARGET_FILE:${libtarget}> DESTINATION bin)
 endfunction()
 
-link(fmt fmt::fmt)
+link(fmt)
 
 #--------------------------------------------------------------------------------------------------
 # Install
