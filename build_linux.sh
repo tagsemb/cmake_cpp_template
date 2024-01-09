@@ -2,5 +2,5 @@
 
 buildDir=build_linux
 cmake -B ${buildDir} --preset default
-cmake --build ${buildDir}
-cmake --install ${buildDir}
+cmake --build ${buildDir} --config Release
+cmake --install ${buildDir} --config Release
