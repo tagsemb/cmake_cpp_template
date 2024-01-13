@@ -29,13 +29,22 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ALL_FILES})
 # Third-party libs
 function(link libname)
 	find_package(${libname} REQUIRED)
+	
+	# Use second argument as libtarget if provided, otherwise name::name
 	if(ARGC EQUAL 2)
 		set(libtarget ${ARGV1})
 	else()
 		set(libtarget ${libname}::${libname})
 	endif()
+
+	# Link to project
 	target_link_libraries(${PROJECT_NAME} PRIVATE ${libtarget})
-	install(FILES $<TARGET_FILE:${libtarget}> DESTINATION bin)
+
+	# Install files if applicable	
+	get_target_property(target_type ${libtarget} TYPE)
+	if (target_type STREQUAL "EXECUTABLE" OR target_type STREQUAL "STATIC_LIBRARY" OR target_type STREQUAL "SHARED_LIBRARY" OR target_type STREQUAL "MODULE_LIBRARY" )
+		install(FILES $<TARGET_FILE:${libtarget}> DESTINATION bin)
+	endif ()
 endfunction()
 
 link(fmt)
